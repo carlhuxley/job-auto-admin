@@ -13,28 +13,20 @@ pyautogui.FAILSAFE = True
 pyautogui.PAUSE = 3
 
 EMAIL_USER = os.environ.get('EMAIL_USER')
-CVLIB_PASS = os.environ.get('CVLIB_PASS')
-TJOBS_PASS = os.environ.get('TJOBS_PASS')
-
-submit_btn_path = "//*[@id='cand-login-left']/input[3]"
+CWJOB_PASS = os.environ.get('CWJOB_PASS')
+job_url = 'https://www.cwjobs.co.uk/job/senior-automation-tester/amsource-technology-ltd-job88042045'
+submit_btn_path = '//*[@id="btnLogin"]'
 account_btn_class = 'a.profile-name-header'
-logout_url = 'https://www.cv-library.co.uk/candidate/logout'
-tjlogout_field_id = ""
-email_field_id = "cand_email"
-password_field_id = "cand_password"
-login_url = 'https://www.cv-library.co.uk/candidate/login'
-
-tjsubmit_btn_path = '//*[@id="btnLogin"]'
-tjaccount_btn_class = ""
-tjlogin_url = "https://www.totaljobs.com/account/signin?ReturnUrl=/"
-tjlogout_url = 'https://www.totaljobs.com/account/signout?ReturnUrl=/'
-tjemail_field_id = 'Form_Email'
-tjpassword_field_id = 'Form_Password'
+logout_url = 'https://www.cwjobs.co.uk/account/signout?ReturnUrl=/'
+email_field_id = "Form_Email"
+password_field_id = "Form_Password"
+login_url = 'https://www.cwjobs.co.uk/account/signin?ReturnUrl=/'
 
 
 class Automate(User):
     def __init__(self, submit_btn_path, account_btn_class, logout_url, email_field_id, password_field_id, login_url, email, password):
         super().__init__(submit_btn_path, account_btn_class, logout_url, email_field_id, password_field_id, login_url, email, password)
+        #self.job_url = job_url
 
     @staticmethod
     def change_cover_letter():
@@ -73,18 +65,29 @@ class Automate(User):
         click_upload.click(up_btn)
         click_upload.perform()
 
+    @staticmethod
+    def job_apply(url):
+        driver.get(url)
+        apply_btn = driver.find_element_by_link_text('APPLY')
+        actions = ActionChains(driver)
+        actions.click(apply_btn)
+        actions.perform()
+        add_cover_letter = driver.find_element_by_id('coverLetterText')
+        actions = ActionChains(driver)
+        actions.click(add_cover_letter)
+        actions.perform()
+        submit = driver.find_element_by_id('btnSubmit')
+        actions = ActionChains(driver)
+        actions.click(submit)
+        actions.perform()
 
-cvlib_auto = Automate(submit_btn_path, account_btn_class, logout_url, email_field_id, password_field_id, login_url, EMAIL_USER, CVLIB_PASS)
-cvlib_auto.login()
-cvlib_auto.upload_cv()
+
+cwjobs_auto = Automate(submit_btn_path, account_btn_class, logout_url, email_field_id, password_field_id, login_url, EMAIL_USER, CWJOB_PASS)
+cwjobs_auto.login()
+# cwjobs_auto.upload_cv()
 # cvlib_auto.change_cover_letter()
-
-# cvlib_auto.logout()
-
-# tj_login = User(tjsubmit_btn_path, tjaccount_btn_class, tjlogout_url, tjemail_field_id, tjpassword_field_id, tjlogin_url, email, totaljobspw)
-# tj_login.login()
-# tj_login.logout()
-
+cwjobs_auto.job_apply(job_url)
+# cwjobs_auto.logout()
 # job_apply(job_url)
 # driver.close()
 # driver.quit()
