@@ -14,6 +14,7 @@ pyautogui.PAUSE = 3
 
 EMAIL_USER = os.environ.get('EMAIL_USER')
 CWJOB_PASS = os.environ.get('CWJOB_PASS')
+
 job_url = 'https://www.cwjobs.co.uk/job/senior-automation-tester/amsource-technology-ltd-job88042045'
 submit_btn_path = '//*[@id="btnLogin"]'
 account_btn_class = 'a.profile-name-header'
@@ -26,7 +27,6 @@ login_url = 'https://www.cwjobs.co.uk/account/signin?ReturnUrl=/'
 class Automate(User):
     def __init__(self, submit_btn_path, account_btn_class, logout_url, email_field_id, password_field_id, login_url, email, password):
         super().__init__(submit_btn_path, account_btn_class, logout_url, email_field_id, password_field_id, login_url, email, password)
-        #self.job_url = job_url
 
     @staticmethod
     def change_cover_letter():
@@ -82,11 +82,11 @@ class Automate(User):
         actions.perform()
 
 
-cwjobs_auto = Automate(submit_btn_path, account_btn_class, logout_url, email_field_id, password_field_id, login_url, EMAIL_USER, CWJOB_PASS)
-cwjobs_auto.login()
+#cwjobs_auto = Automate(submit_btn_path, account_btn_class, logout_url, email_field_id, password_field_id, login_url, EMAIL_USER, CWJOB_PASS)
+#cwjobs_auto.login()
 # cwjobs_auto.upload_cv()
 # cvlib_auto.change_cover_letter()
-cwjobs_auto.job_apply(job_url)
+#cwjobs_auto.job_apply(job_url)
 # cwjobs_auto.logout()
 # job_apply(job_url)
 # driver.close()
